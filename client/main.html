@@ -4,11 +4,13 @@
 
 <body>
   <h1>Welcome to Meteor!</h1>
-
+  <div class="well">{{> loginButtons}}</div>
   {{> hello}}
   {{> info}}
-  {{> addressInput}}
-  {{> addressList}}
+  {{#if currentUser}}
+    {{> addressInput}}
+    {{> addressList}}
+  {{/if}}
 
 </body>
 

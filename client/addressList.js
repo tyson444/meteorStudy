@@ -1,6 +1,13 @@
+//Client에서 구독 
+Template.addressList.onCreated(function(){
+    var self = this;
+    self.subscribe("AddressBookData", 10);
+});
+
+
 Template.addressList.helpers({
   list(){
-    return AddressBook.find({},{limit:10, sort:{name:-1}});
+    return AddressBook.find({},{/*limit:10,*/ sort:{name:-1}});
   }
 
 });//End helpers
@@ -8,9 +15,7 @@ Template.addressList.helpers({
 
 
 Template.addressList.events({
-  'click button[name=remove]' (evt,tmpl){
-    AddressBook.remove({ _id : this._id });
-  }
+
 });//End events
 
 Template.addressInput.events({
@@ -21,8 +26,23 @@ Template.addressInput.events({
       phone : tmpl.find("input[name=phone]").value,
       email : tmpl.find("input[name=email]").value,
       company : tmpl.find("input[name=company]").value,
-      birthday : tmpl.find("input[name=birthday]").value
+      birthday : tmpl.find("input[name=birthday]").value,
+      owner : Meteor.userId()
     };
+
+try{
+  check(address.name, NotEmptyString);
+  check(address.company, NotEmptyString);
+  check(address.email, EmailString);
+  check(address.phone, PhoneString);
+  check(address.birthday, BirthDayString);
+}catch(err){
+  alert("입력값을 확인하세요. : [" + err.message + "]");
+  return;
+}
+
+
+    /*검증후 등록*/
 
     /*DB값 넣기*/
     AddressBook.insert(address);
@@ -34,5 +54,52 @@ Template.addressInput.events({
     tmpl.find("input[name=company]").value = "";
     tmpl.find("input[name=birthday]").value = "";
 
+  }
+});
+
+
+//Item 이벤트
+Template.addressItem.events({
+//제거 버튼
+  'click button[name=remove]' (evt,tmpl){
+    AddressBook.remove({ _id : this._id });
+  },
+
+//수정버튼
+  'click button[name=modify]' (evt,tmpl){
+    Session.set("editItem",this._id);
+  },
+
+
+//수정후 저장버튼
+  'click button[name=save]' (evt,tmpl){
+    var address = {
+      name : tmpl.find("input[name=name]").value,
+      phone : tmpl.find("input[name=phone]").value,
+      email : tmpl.find("input[name=email]").value,
+      company : tmpl.find("input[name=company]").value,
+      birthday : tmpl.find("input[name=birthday]").value
+    };
+
+    AddressBook.update({_id:this._id},{$set:address});
+    Session.set("editItem", null);
+  },
+
+//수정시 취소버튼
+  'click button[name=cancel]' (evt,tmpl){
+    Session.set("editItem", null);
+  },
+
+
+//뷰모드에서 텍스트 버튼 클릭시 수정모드로 전환
+  'click .edit-thing' (evt, tmpl){
+    Session.set("editItem",this._id);
+  }
+
+});
+
+Template.addressItem.helpers({
+  editing(){
+    return this._id == Session.get("editItem");
   }
 });
