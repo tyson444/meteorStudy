@@ -1,0 +1,46 @@
+<!--목록보여주기-->
+<template name ="addressList">
+  <table class ="table table-boardered table-condensed table-striped table-hover">
+    <thead>
+      <tr class="info">
+        <th>이름</th>
+        <th>전화번호</th>
+        <th>이메일</th>
+        <th>회사</th>
+        <th>생일</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each list}}
+        <tr>
+          <td>{{name}}</td>
+          <td>{{phone}}</td>
+          <td>{{email}}</td>
+          <td>{{company}}</td>
+          <td>{{birthday}}</td>
+          <td><button class="btn btn-warning btn-sm" name="remove"><i class="glyphicon glyphicon-trash"></i>삭제</button></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+
+<!--입력폼-->
+<template name="addressInput">
+  <div class="well">
+    <div class="form-inline">
+      <div class="form-group">
+        <input type="text" class="form-control" name="name" placeholder="이름">
+        <input type="text" class="form-control" name="phone" placeholder="전화번호">
+        <input type="text" class="form-control" name="email" placeholder="이메일">
+        <input type="text" class="form-control" name="company" placeholder="회사">
+        <input type="text" class="form-control" name="birthday" placeholder="생일">
+        <button class="btn btn-info btn-sm" name="saveAddress">
+          <i class="glyphicon glyphicon-ok"></i>등록
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
