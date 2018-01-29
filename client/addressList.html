@@ -3,6 +3,7 @@
   <table class ="table table-boardered table-condensed table-striped table-hover">
     <thead>
       <tr class="info">
+        <th>No</th>
         <th>이름</th>
         <th>전화번호</th>
         <th>이메일</th>
@@ -13,10 +14,16 @@
     </thead>
     <tbody>
       {{#each list}}
+      {{@index}}
         {{>addressItem}}
       {{/each}}
     </tbody>
   </table>
+  <div align="center">
+    <button name="more" class="btn btn-primary">
+      <i class="glyphicon glyphicon-arrow-down"></i> 더보기
+    </button>
+  </div>
 </template>
 
 
@@ -44,6 +51,7 @@
 <template name="addressItem">
   {{#if editing}}
     <tr>
+      <td>{{i}}</td>
       <td><input type="text" style="width:100%" name="name" value="{{name}}"/></td>
       <td><input type="text" style="width:100%" name="phone" value="{{phone}}"/></td>
       <td><input type="text" style="width:100%" name="email" value="{{email}}"/></td>
@@ -58,6 +66,7 @@
     </tr>
   {{else}}
     <tr>
+      <td class="edit-thing">{{i}}</td>
       <td class="edit-thing">{{name}}//{{_id}}</td>
       <td class="edit-thing">{{phone}}</td>
       <td class="edit-thing">{{email}}</td>

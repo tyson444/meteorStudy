@@ -1,3 +1,7 @@
 Meteor.publish("AddressBookData", function(count){
-  return AddressBook.find({},{ limit : count, sort : { Name : -1 }})
+  var userId = this.userId;
+  if(userId){
+    return AddressBook.find({owner:userId},{ limit : count, sort : { Name : -1 }})
+  }
+
 });

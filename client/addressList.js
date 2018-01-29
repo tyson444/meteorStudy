@@ -1,7 +1,12 @@
-//Client에서 구독 
+//Client에서 구독
 Template.addressList.onCreated(function(){
+    Session.set("cnt",5); //변수 초기값세팅 30
     var self = this;
-    self.subscribe("AddressBookData", 10);
+    //self.subscribe("AddressBookData", 10);
+    self.autorun(function(){
+      self.subscribe("AddressBookData", Session.get("cnt"));//cnt만큼 구독
+    });
+
 });
 
 
@@ -15,7 +20,9 @@ Template.addressList.helpers({
 
 
 Template.addressList.events({
-
+  "click button[name=more]" (evt,tmpl){
+    Session.set("cnt",Session.get("cnt")+5);
+  }
 });//End events
 
 Template.addressInput.events({

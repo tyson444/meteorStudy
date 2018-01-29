@@ -2104,12 +2104,25 @@ var fixtures = [
 
   Meteor.startup(() => {
 
-      if(AddressBook.find().count() === 0){
-          console.log("데이터가 존재하지 않습니다. fixture 데이터를 입력합니다.");
-          /* 10 건만 등록해보자 */
-          for(var i=0,len=10; i<len;i++){
-              AddressBook.insert(fixtures[i]);
-          }
-      }
+
+      // if(AddressBook.find().count() === 0){
+      //     console.log("데이터가 존재하지 않습니다. fixture 데이터를 입력합니다.");
+      //     /* 10 건만 등록해보자 */
+      //     for(var i=0,len=10; i<len;i++){
+      //         AddressBook.insert(fixtures[i]);
+      //     }
+      // }
 
   });
+//콘솔에서 추가할때,
+
+  // Meteor.methods({
+  //   makeFixtureData (userId){
+  //     //배열전부등록
+  //     for(var i=0, len=fixtures.length; i<len; i++){
+  //       fixtures[i]["owner"] = userId;
+  //       AddressBook.insert(fixtures[i]);
+  //     }
+  //     return "완료되었습니다."
+  //   }
+  // });
