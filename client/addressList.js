@@ -13,7 +13,13 @@ Template.addressList.onCreated(function(){
 Template.addressList.helpers({
   list(){
     return AddressBook.find({},{/*limit:10,*/ sort:{name:-1}});
+  },
+
+  "offset" : function(index){
+    index +=1;
+    return index;
   }
+
 
 });//End helpers
 
