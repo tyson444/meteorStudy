@@ -1,10 +1,20 @@
 //Client에서 구독
 Template.addressList.onCreated(function(){
-    Session.set("cnt",5); //변수 초기값세팅 30
+    Session.set("cnt",10); //변수 초기값세팅 30
     var self = this;
     //self.subscribe("AddressBookData", 10);
     self.autorun(function(){
       self.subscribe("AddressBookData", Session.get("cnt"));//cnt만큼 구독
+    });
+
+    //마우스스크롤시, 마지막이면 세션 늘려주기
+    $(window).scroll(function(){
+      var scrollHeight = $(window).scrollTop() + $(window).height();
+      var documentHeight = $(document).height();
+      //200픽셀 이하면 세션값 10더함.
+      if(scrollHeight +200 >= documentHeight){
+        Session.set("cnt",Session.get("cnt")+10);
+      }
     });
 
 });
@@ -18,6 +28,10 @@ Template.addressList.helpers({
   "offset" : function(index){
     index +=1;
     return index;
+  },
+  numbering(indexNum){
+    indexNum +=5;
+    return indexNum;
   }
 
 
